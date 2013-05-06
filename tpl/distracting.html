@@ -1,0 +1,12 @@
+<h1>Below sites is considered distracting</h1>
+
+<div class="btn-block focus-distracting-actions">
+  <button ng-click="add()" class="btn btn-primary">Add new site</button>
+</div>
+<ul class="focus-distracting-list">
+  <li class="focus-distracting-site" ng-repeat="url in urls">{{ url }}
+    <a class="remove-button" href="#" title="Remove" ng-click="remove($event, url)">
+      <span class="icon-remove-circle"></span>
+    </a>
+  </li>
+</ul>

@@ -1,0 +1,33 @@
+
+.site-title {
+  font-size: 20px;
+  text-shadow: #ccc 1px 1px 3px;
+}
+
+.g-header {
+  margin-bottom: 20px;
+  padding-top: 20px;
+}
+
+.g-sidebar {
+  margin-top: 20px;
+}
+
+#focus-distracting-add-form textarea {
+  width: 510px;
+  height: 60px;
+}
+
+.focus-distracting-actions {
+  margin: 20px 0 10px;
+}
+
+.focus-distracting-site .remove-button {
+  float: none;
+  margin-left: 10px;
+  visibility: hidden;
+}
+
+.focus-distracting-site:hover .remove-button {
+  visibility: visible;
+}

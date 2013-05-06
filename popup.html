@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app>
+<meta charset="utf-8">
+<title>Focus</title>
+<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="css/main.css">
+<div id="main">
+  <div class="focus-start pull-left" ng-controller="startCtrl">
+    <div>Focus for <input type="number" ng-model="interval" min="1" max="100" ng-disabled="active"> minutes.</div>
+    <button class="focus-start-button btn btn-primary" ng-click="changeState()">{{buttonText}}</button>
+    <button ng-show="active" class="btn" ng-click="quit()">Quit</button>
+    <progress ng-init="intervalTimestamp = interval * 60 * 1000" max="{{intervalTimestamp}}"
+              value="{{intervalTimestamp - when}}" ng-show="active"></progress>
+  </div>
+  <a href="/options.html" target="bobobee_preferences" title="Settings" class="pull-right">
+    <span class="icon icon-wrench"></span>
+  </a>
+</div>
+<script src="components/angular/angular.min.js"></script>
+<script src="app/main.js"></script>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="focus-options">
+<meta charset="utf-8">
+<title>Focus</title>
+<link rel="stylesheet" href="css/options.css">
+<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css"/>
+<header class="container g-header" id="header">
+  <a href="/options.html" class="brand"><img src="logo.png" alt="focus"/></a>
+  <strong class="site-title">Focus options</strong>
+</header>
+
+<div class="container g-body">
+  <div class="row">
+    <div class="span3 g-sidebar">
+      <ul class="nav nav-list">
+        <li class="active"><a href="#/" id="focus-nav-distracting">Distracting sites</a></li>
+        <li><a href="#/activities" id="focus-nav-activities">Activities</a></li>
+      </ul>
+    </div>
+    <div id="main" class="span9 g-main" ng-view></div>
+  </div>
+</div>
+<script src="components/jquery/jquery.min.js"></script>
+<script src="components/angular/angular.min.js"></script>
+<script src="components/bootstrap/js/bootstrap.min.js"></script>
+<script src="components/chart.js/Chart.min.js"></script>
+<script src="components/underscore/underscore-min.js"></script>
+<script src="app/server-js.js"></script>
+<script src="app/util.js"></script>
+<script src="app/options.js"></script>
+</html>
