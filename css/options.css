@@ -4,6 +4,9 @@
   text-shadow: #ccc 1px 1px 3px;
 }
 
+/**
+ * Structure
+ */
 .g-header {
   margin-bottom: 20px;
   padding-top: 20px;

@@ -8,7 +8,7 @@ util.getLocation = function(url) {
   return element;
 };
 
-util.generateDateKey = function(prefix, isDay) {
+util.generateDateStr = function(prefix, isDay) {
   var date = new Date();
   return (prefix ? prefix : '') +
       date.getFullYear() + date.getMonth() +

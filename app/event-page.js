@@ -94,8 +94,7 @@ chrome.runtime.onMessage.addListener(
           var response = focusSession ? focusSession.toJSON() : null;
           sendResponse(response);
         });
-
-        return true;
+        break;
 
       case 'close_current_tab':
         chrome.tabs.remove(sender.tab.id);
@@ -218,8 +217,7 @@ focus.tab = (function() {
 
           stopTrackUrl(data.window_to_activity[windowId]);
           chrome.tabs.get(activeInfo.tabId, function(tab) {
-            var activity = startTrackUrl(tab.url, true);
-            data.window_to_activity[windowId] = activity;
+            data.window_to_activity[windowId] = startTrackUrl(tab.url, true);
           });
         });
       });
@@ -238,25 +236,25 @@ focus.tab = (function() {
   }
 
 
-  function processMonthData(dateKey, monthKey) {
+  function processMonthData(day, month) {
     var monthToDay = data.month_to_day;
-    if (typeof monthToDay.key == 'undefined') monthToDay.key = monthKey;
-    var lastActiveMonthKey = monthToDay.key;
+    if (typeof monthToDay.key == 'undefined') monthToDay.key = month;
+    var lastActiveMonth = monthToDay.key;
     var allActivities = data.activities;
-    if (lastActiveMonthKey != monthKey) {
-      monthToDay.key = monthKey;
+    if (lastActiveMonth != month) {
+      monthToDay.key = month;
 
       // remove
-      monthToDay.values.forEach(function (dateKey) {
-        delete allActivities[dateKey];
+      monthToDay.values.forEach(function (day) {
+        delete allActivities[day];
       });
 
       monthToDay.values = [];
     }
 
-    var lastDateKey = _.last(monthToDay.values);
-    if (!lastDateKey || lastDateKey != dateKey) {
-      monthToDay.values.push(dateKey);
+    var lastDay = _.last(monthToDay.values);
+    if (!lastDay || lastDay != day) {
+      monthToDay.values.push(day);
     }
 
     data.month_to_day = monthToDay;
@@ -268,15 +266,15 @@ focus.tab = (function() {
       url = util.getLocation(url).host;
     }
 
-    var dateKey = util.generateDateKey('date', true);
-    var monthKey = util.generateDateKey('', false);
+    var day = util.generateDateStr('date', true);
+    var month = util.generateDateStr('', false);
     var allActivities = data.activities;
-    var activities = allActivities[dateKey] || {};
+    var activities = allActivities[day] || {};
 
     var activity = activities[url] || {duration: 0, url: url};
     activity.startTime = Date.now();
-    activity.dateKey = dateKey;
-    activity.monthKey = monthKey;
+    activity.day = day;
+    activity.month = month;
 
     return activity;
   }
@@ -286,20 +284,20 @@ focus.tab = (function() {
    */
   function stopTrackUrl(activity) {
     if (!activity) return;
-    var monthKey = util.generateDateKey('', false);
-    var dateKey = activity.dateKey;
+    var month = util.generateDateStr('', false);
+    var day = activity.day;
     var allActivities = data.activities;
-    var activities = allActivities[dateKey] || {};
+    var activities = allActivities[day] || {};
     var now = Date.now();
 
-    if (activity.monthKey == monthKey) {
+    if (activity.month == month) {
       activity.duration += (now - activity.startTime);
       activity.startTime = now;
       activities[activity.url] = _.extend({}, activity);
-      allActivities[dateKey] = activities;
+      allActivities[day] = activities;
     }
 
-    processMonthData(dateKey, monthKey);
+    processMonthData(day, month);
   }
 
   return {

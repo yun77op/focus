@@ -83,13 +83,13 @@ function activitiesCtrl($scope) {
     }
     chrome.storage.local.get(keys, function(data) {
       var allActivities = data.activities;
-      var dateKey = util.generateDateKey('date', true);
+      var day = util.generateDateStr('date', true);
       var activities;
 
       if (isChartMonthView) {
         activities = {};
-        data.month_to_day && data.month_to_day.values.forEach(function(dateKey) {
-          _.each(allActivities && allActivities[dateKey], function(activity, url) {
+        data.month_to_day && data.month_to_day.values.forEach(function(day) {
+          _.each(allActivities && allActivities[day], function(activity, url) {
             if (_.isUndefined(activities[url])) {
               activities[url] = _.extend({}, activity);
             } else {
@@ -98,7 +98,7 @@ function activitiesCtrl($scope) {
           });
         });
       } else {
-        activities = allActivities && allActivities[dateKey];
+        activities = allActivities && allActivities[day];
       }
 
       if (!activities) {
