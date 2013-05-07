@@ -27,7 +27,7 @@
     "persistent": false
   },
   "web_accessible_resources": [
-    "icon.png"
+    "icon48.png"
   ],
   "icons": {
     "16": "icon16.png",

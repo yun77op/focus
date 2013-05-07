@@ -90,6 +90,7 @@ function activitiesCtrl($scope) {
         activities = {};
         data.month_to_day && data.month_to_day.values.forEach(function(day) {
           _.each(allActivities && allActivities[day], function(activity, url) {
+            if (!activity) return;
             if (_.isUndefined(activities[url])) {
               activities[url] = _.extend({}, activity);
             } else {
@@ -118,17 +119,17 @@ function activitiesCtrl($scope) {
             data: []
           }
         ]};
-      var activityArray = _.values(activities);
+      var activityArray = _.compact(_.values(activities));
 
       activityArray.sort(function (a, b) {
         return b.time - a.time;
       }).slice(0, 7).forEach(function (activity) {
           chartData.labels.push(activity.url);
-          chartData.datasets[0].data.push(Math.round(activity.time / 60 / 60 / 1000));
+          chartData.datasets[0].data.push((activity.time / 60 / 60 / 1000).toFixed(2));
         });
 
       chart.Bar(chartData, {
-        scaleLabel : "<%=value%>h"
+        scaleLabel : "<%=value%>"
       });
 
     });

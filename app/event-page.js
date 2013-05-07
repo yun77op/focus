@@ -94,11 +94,10 @@ chrome.runtime.onMessage.addListener(
           var response = focusSession ? focusSession.toJSON() : null;
           sendResponse(response);
         });
-        break;
+        return true;
 
       case 'close_current_tab':
         chrome.tabs.remove(sender.tab.id);
-
     }
   });
 
@@ -111,8 +110,6 @@ chrome.runtime.onSuspend.addListener(function() {
  * @namespace
  * @type {{}}
  */
-
-
 focus.contentScript = {};
 
 focus.contentScript.insert = function(tab) {
@@ -150,6 +147,13 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     if (!tab.url || !tab.url.match(HTTP_PATTERN)) return;
     focus.contentScript.insert(tab);
   });
+});
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  if (changeInfo.status == 'loading') {
+    if (!tab.url || !tab.url.match(HTTP_PATTERN)) return;
+    focus.contentScript.insert(tab);
+  }
 });
 
 
