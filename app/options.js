@@ -129,7 +129,7 @@ function activitiesCtrl($scope) {
         });
 
       chart.Bar(chartData, {
-        scaleLabel : "<%=value%>"
+        scaleLabel : "<%=value%>h"
       });
 
     });
