@@ -122,12 +122,11 @@ function activitiesCtrl($scope) {
       var activityArray = _.compact(_.values(activities));
 
       activityArray.sort(function (a, b) {
-        return b.time - a.time;
-      }).
-        slice(0, 7).
+        return b.duration - a.duration;
+      }).slice(0, 7).
         forEach(function (activity) {
           chartData.labels.push(activity.url);
-          chartData.datasets[0].data.push((activity.duration / 60 / 60 / 1000).toFixed(1));
+          chartData.datasets[0].data.push(activity.duration / 60 / 60 / 1000);
         });
 
       chart.Bar(chartData, {
