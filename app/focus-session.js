@@ -15,6 +15,7 @@ var SessionState = {
  * @constructor
  */
 var FocusSession = function(options) {
+  var self = this;
   this.interval_ = options.interval;
   this.when_ = options.when || this.interval_;
   this.setState(options.state || SessionState.quited);
@@ -22,24 +23,22 @@ var FocusSession = function(options) {
   this.__defineGetter__('isActive', function() {
     return this.state_ == SessionState.started;
   });
+
+  chrome.alarms.onAlarm.addListener(function(alarm) {
+    if (alarm.name != 'focus_session') return;
+    self.handleTimeUp_();
+  });
 };
 
 FocusSession.prototype.start = function() {
-  var self = this;
   var now = Date.now();
   this.startTime_ = now;
   chrome.alarms.create('focus_session', {
     when: now + this.when_
   });
-
-  chrome.alarms.onAlarm.addListener(function(alarm) {
-    if (alarm.name != 'focus_session') return;
-
-    self.handleTimeUp_(alarm);
-  });
 };
 
-FocusSession.prototype.handleTimeUp_ = function(alarm) {
+FocusSession.prototype.handleTimeUp_ = function() {
   var notification = webkitNotifications.createNotification(
     '../icon48.png',  // icon url - can be relative
     'Focus time is up!',  // notification title

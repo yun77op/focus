@@ -123,15 +123,16 @@ function activitiesCtrl($scope) {
 
       activityArray.sort(function (a, b) {
         return b.time - a.time;
-      }).slice(0, 7).forEach(function (activity) {
+      }).
+        slice(0, 7).
+        forEach(function (activity) {
           chartData.labels.push(activity.url);
-          chartData.datasets[0].data.push((activity.time / 60 / 60 / 1000).toFixed(2));
+          chartData.datasets[0].data.push((activity.duration / 60 / 60 / 1000).toFixed(1));
         });
 
       chart.Bar(chartData, {
         scaleLabel : "<%=value%>h"
       });
-
     });
   };
 

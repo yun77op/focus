@@ -85,10 +85,6 @@ chrome.runtime.onMessage.addListener(
         focus.focusSession.quitFocusSession();
         break;
 
-      case 'session_end':
-        focus.focusSession.quitFocusSession();
-        break;
-
       case 'session_query':
         focus.focusSession.getFocusSession(function(focusSession) {
           var response = focusSession ? focusSession.toJSON() : null;
@@ -190,7 +186,7 @@ focus.tab = (function() {
         delete data.window_to_activity[windowId];
         if (data.previousFocusedWindowId == windowId) {
           data.previousFocusedWindowId = null;
-          data.window_to_activity = null;
+          data.window_to_activity = {};
         }
       });
 
