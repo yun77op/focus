@@ -153,20 +153,19 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 
 
-var cacheStorage = function(data, metaData, callback) {
-  var keys = Object.keys(metaData);
-  chrome.storage.local.get(keys, function(aData) {
-    _.extend(data, metaData, aData);
-    callback();
-  });
-
-  chrome.runtime.onSuspend.addListener(function persist() {
-    chrome.storage.local.set(data);
-  });
-};
-
-
 focus.tab = (function() {
+
+  function cacheStorage(data, metaData, callback) {
+    var keys = Object.keys(metaData);
+    chrome.storage.local.get(keys, function(aData) {
+      _.extend(data, metaData, aData);
+      callback();
+    });
+
+    chrome.runtime.onSuspend.addListener(function persist() {
+      chrome.storage.local.set(data);
+    });
+  }
 
   // cached data
   var data = {};
