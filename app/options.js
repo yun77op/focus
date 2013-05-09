@@ -94,7 +94,7 @@ function activitiesCtrl($scope) {
             if (_.isUndefined(activities[url])) {
               activities[url] = _.extend({}, activity);
             } else {
-              activities[url].time += activity.time;
+              activities[url].duration += activity.duration;
             }
           });
         });
